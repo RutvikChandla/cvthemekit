@@ -1,10 +1,26 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
+const axios = require('axios');
 
 
 // utils.js
 function getThemeList(store, password) {
-  console.log('Download from:', store)
+  axios.get(`http://localhost:3000/getThemeList/${store}`, {
+  })
+  .then(response => {
+    if (response.status === 200) {
+      const themes = response.data.themes;
+
+      themes.forEach(theme => {
+        console.log(`Theme Name: ${theme.themeName}, ID: ${theme.id}`);
+      });
+    } else {
+      logErrorAndExit(`Error: Received status code ${response.status} and ${response.message}`);
+    }
+  })
+  .catch(error => {
+    logErrorAndExit(error.message);
+  });
 }
 
 function downloadTheme(themeId, store, password) {

@@ -3,7 +3,6 @@ const { getConfigFilePath, readConfigFile, isConfigFileExist, getThemeList, down
 
 function executeGetCommand(argv) {
   const { themeId, store, password } = getConfigAndArgs(argv);
-  console.log(themeId, store, password)
   if (argv.list) {
     getThemeList(store, password);
   } else if (themeId) {
