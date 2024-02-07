@@ -3,6 +3,7 @@ const yargs = require('yargs/yargs')
 const { hideBin } = require('yargs/helpers');
 const configureCommand = require('./commands/configureCommand');
 const getCommand = require('./commands/getCommand');
+const watchCommand = require('./commands/watchCommand');
 // const watchCommand = require('./watchCommand');
 
 const argv = yargs(hideBin(process.argv))
@@ -66,8 +67,8 @@ switch (command) {
     // console.log(argv)
     break;
   case 'watch':
-    // watchCommand(argv);
-    console.log(argv)
+    watchCommand(argv);
+    // console.log(argv)
     break;
   default:
     console.error('Invalid command. Run the help command for usage information:');
