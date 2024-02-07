@@ -50,6 +50,8 @@ const argv = yargs(hideBin(process.argv))
       });
   })
   .command('watch', 'watch themes')
+  .showHelpOnFail(true)
+  .help()
   .argv;
 
 const command = argv._[0];
@@ -68,6 +70,6 @@ switch (command) {
     console.log(argv)
     break;
   default:
-    console.error('No command specified');
+    console.error('Invalid command. Run the help command for usage information:');
     break;
 }

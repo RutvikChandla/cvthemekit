@@ -23,8 +23,8 @@ Verifying the presence of either the configuration file or command-line argument
   if ( (configExist) || argv ){
     if ((configExist) && ("themeid" in argv && "store" in argv, "password" in argv)){
       const config = readConfigFile();
-      const { themeId, store, password } = argv
-      if (themeId == config.development.theme_id && store == config.development.store && password == config.development.password){
+      const { themeid, store, password } = argv
+      if (themeid == config.development.theme_id && store == config.development.store && password == config.development.password){
         return {
           themeId: argv.themeid,
           store: argv.store,
@@ -61,22 +61,6 @@ Verifying the presence of either the configuration file or command-line argument
     }
   } else {
     logErrorAndExit("Config file and command line are not given")
-  }
-
-
-  // const configExist = isConfigFileExist()
-  if ((configExist) && ("themeid" in argv && "store" in argv, "password" in argv)){
-    const config = readConfigFile();
-    const { themeId, store, password } = argv
-    if (themeid == config.development.theme_id && store == config.development.store && password == config.development.password){
-      return {
-        themeId: argv.themeid,
-        store: argv.store,
-        password: argv.password
-      };
-    } else {
-      logErrorAndExit('Values from the arg does not match config file we are stoping the process');
-    }
   }
 }
 

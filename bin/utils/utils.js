@@ -1,6 +1,5 @@
 const fs = require('fs');
 const yaml = require('js-yaml');
-const axios = require('axios');
 
 
 // utils.js
@@ -31,10 +30,6 @@ function downloadTheme(themeId, store, password) {
   console.log('Download from:', store, "with password:", password, "for theme:", themeId)
 }
 
-module.exports = {
-  getThemeList,
-  downloadTheme
-};
 
 function getConfigFilePath() {
   return `${process.cwd()}/config.yml`;
@@ -44,7 +39,18 @@ function isConfigFileExist(){
   return fs.existsSync(`${process.cwd()}/config.yml`);
 }
 
+function isDirectoryEmpty(directoryPath) {
+  const files = fs.readdirSync(directoryPath);
+  return files.length === 0;
+}
+
+
 function createConfigFile(themeId, store, password) {
+
+  if (!isDirectoryEmpty(process.cwd())) {
+    logErrorAndExit("Please run this command in a empty directory")
+  }
+
   if (isConfigFileExist()) {
     logErrorAndExit("Config file already exist or you are not in your root of your theme folder")
   }
