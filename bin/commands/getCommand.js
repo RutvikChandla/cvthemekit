@@ -1,5 +1,6 @@
 // getCommand.js
-const { getConfigFilePath, readConfigFile, isConfigFileExist, getThemeList, downloadTheme, logErrorAndExit, createConfigFile} = require('../utils/utils');
+const { getConfigFilePath, readConfigFile, isConfigFileExist, logErrorAndExit, createConfigFile} = require('../utils/utils');
+const { getThemeList, downloadTheme } = require('../utils/themeUtils');
 
 function executeGetCommand(argv) {
   const { themeId, store, password } = getConfigAndArgs(argv);

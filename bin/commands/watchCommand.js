@@ -2,6 +2,8 @@
 const chokidar = require('chokidar');
 const path = require('path');
 const { isConfigFileExist, readConfigFile, logErrorAndExit } = require('../utils/utils');
+const { updateContent } = require('../utils/themeUtils');
+
 
 function executeWatchCommand(argv) {
   if (!isConfigFileExist()) {
@@ -10,39 +12,42 @@ function executeWatchCommand(argv) {
   }
 
   const config = readConfigFile();
-  const { themeId, store, password } = getConfigAndArgs(config);
 
 
   if (config.ignore){
-    config.ignore.push('config.yaml')
+    config.ignore.push('config.yml')
     ignoreFiles = config.ignore
   } else {
-    ignoreFiles = ['config.yaml']
+    ignoreFiles = ['config.yml']
   }
 
-  const watchOptions = {
-    ignored: ignoreFiles,
-    persistent: true
+  const absoluteIgnoreFiles = ignoreFiles.map(file => path.resolve(process.cwd(), file));
+
+  const currentDir = path.basename(process.cwd())
+
+  const watcher = chokidar.watch(process.cwd(), {
+    ignored: absoluteIgnoreFiles,
+    persistent: true,
+    ignoreInitial: true   
     // Add any other chokidar options you need
-  };
-
-  currentDir = path.basename(process.cwd())
-
-  const watcher = chokidar.watch(process.cwd(), watchOptions);
+  });
 
   watcher.on('change', (filePath) => {
-    console.log(`File ${path.relative(currentDir, filePath).slice(3)} has changed. Uploading content...`);
-    // uploadContent(themeId, store, password);
+    console.log(`File ${path.relative(currentDir, filePath).slice(3)} has been changed. Uploading content...`);
+    const { themeId, store, password } = getConfigAndArgs(config);
+    updateContent(themeId, store, password, "update", filePath);
   });
 
   watcher.on('add', (filePath) => {
     console.log(`File ${path.relative(currentDir, filePath).slice(3)} has been added. Uploading content...`);
-    // uploadContent(themeId, store, password);
+    const { themeId, store, password } = getConfigAndArgs(config);
+    updateContent(themeId, store, password, "update", filePath);
   });
 
   watcher.on('unlink', (filePath) => {
     console.log(`The file: ${path.relative(currentDir, filePath).slice(3)} has been removed....`);
-    // uploadContent(themeId, store, password);
+    const { themeId, store, password } = getConfigAndArgs(config);
+    updateContent(themeId, store, password, "delete", filePath);
   });
 
   watcher.on('error', (error) => {

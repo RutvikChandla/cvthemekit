@@ -3,32 +3,6 @@ const yaml = require('js-yaml');
 
 
 // utils.js
-function getThemeList(store, password) {
-  fetch(`http://localhost:3000/getThemeList/${store}`,{
-    headers: {
-      'Authorization': `Bearer ${password}`
-    }})
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Error: Received status code ${response.status} and ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      const themes = data.themes;
-      themes.forEach(theme => {
-        console.log(`Theme Name: ${theme.themeName}, ID: ${theme.id}`);
-      });
-    })
-    .catch(error => {
-      logErrorAndExit(error.message);
-    });
-}
-
-
-function downloadTheme(themeId, store, password) {
-  console.log('Download from:', store, "with password:", password, "for theme:", themeId)
-}
 
 
 function getConfigFilePath() {
@@ -89,8 +63,6 @@ function logErrorAndExit(message){
 }
 
 module.exports = {
-  getThemeList,
-  downloadTheme,
   getConfigFilePath,
   isConfigFileExist,
   createConfigFile,
