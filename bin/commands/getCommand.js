@@ -3,13 +3,13 @@ const { getConfigFilePath, readConfigFile, isConfigFileExist, logErrorAndExit, c
 const { getThemeList, downloadTheme } = require('../utils/themeUtils');
 
 function executeGetCommand(argv) {
-  const { themeId, store, password } = getConfigAndArgs(argv);
+  const { themeID, store, password } = getConfigAndArgs(argv);
   if (argv.list) {
     getThemeList(store, password);
-  } else if (themeId) {
-    downloadTheme(themeId, store, password);
+  } else if (themeID) {
+    downloadTheme(themeID, store, password);
   } else {
-    console.error("Either --list or --themeid is required for 'get' command");
+    console.error("Either --list or --themeID is required for 'get' command");
   }
 }
 
@@ -22,12 +22,12 @@ Verifying the presence of either the configuration file or command-line argument
 
   const configExist = isConfigFileExist()
   if ( (configExist) || argv ){
-    if ((configExist) && ("themeid" in argv && "store" in argv, "password" in argv)){
+    if ((configExist) && ("themeID" in argv && "store" in argv, "password" in argv)){
       const config = readConfigFile();
-      const { themeid, store, password } = argv
-      if (themeid == config.development.theme_id && store == config.development.store && password == config.development.password){
+      const { themeID, store, password } = argv
+      if (themeID == config.development.theme_id && store == config.development.store && password == config.development.password){
         return {
-          themeId: argv.themeid,
+          themeID: argv.themeID,
           store: argv.store,
           password: argv.password
         };
@@ -38,19 +38,19 @@ Verifying the presence of either the configuration file or command-line argument
       const config = readConfigFile();
       try {
         return {
-          themeId: config.development.theme_id,
+          themeID: config.development.theme_id,
           store: config.development.store,
           password: config.development.password
         };
       } catch {
         logErrorAndExit("Looks like config file got corrupted")
       }
-    } else if ("themeid" in argv && "store" in argv, "password" in argv) {
+    } else if ("themeID" in argv && "store" in argv, "password" in argv) {
       try {
-        const { themeid, store, password } = argv
-        createConfigFile(themeid, store, password)
+        const { themeID, store, password } = argv
+        createConfigFile(themeID, store, password)
         return {
-        themeId: themeid,
+        themeID: themeID,
         store: store,
         password: password
       };

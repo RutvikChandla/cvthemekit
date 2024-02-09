@@ -19,11 +19,7 @@ function isDirectoryEmpty(directoryPath) {
 }
 
 
-function createConfigFile(themeId, store, password) {
-
-  if (!isDirectoryEmpty(process.cwd())) {
-    logErrorAndExit("Please run this command in a empty directory")
-  }
+function createConfigFile(themeID, store, password) {
 
   if (isConfigFileExist()) {
     logErrorAndExit("Config file already exist or you are not in your root of your theme folder")
@@ -31,7 +27,7 @@ function createConfigFile(themeId, store, password) {
 
   const config = {
     development: {
-      theme_id: themeId,
+      theme_id: themeID,
       store: store,
       password: password
     }

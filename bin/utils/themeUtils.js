@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const { logErrorAndExit } = require('./utils');
-
+const fetch = require('node-fetch');
+const { log } = require('console');
 
 function getThemeList(store, password) {
   fetch(`http://localhost:3000/getThemeList/${store}`,{
@@ -15,6 +16,7 @@ function getThemeList(store, password) {
       return response.json();
     })
     .then(data => {
+      console.log(data)
       const themes = data.themes;
       themes.forEach(theme => {
         console.log(`Theme Name: ${theme.themeName}, ID: ${theme.id}`);
@@ -26,11 +28,11 @@ function getThemeList(store, password) {
 }
 
 
-function downloadTheme(themeId, store, password) {
-  console.log('Download from:', store, "with password:", password, "for theme:", themeId)
+function downloadTheme(themeID, store, password) {
+  console.log('Download from:', store, "with password:", password, "for theme:", themeID)
 }
 
-function updateContent(themeId, store, password, action, filePath) {
+async function updateContent (themeID, store, password, action, filePath) {
   const currentDir = path.basename(process.cwd())
   const key = path.relative(currentDir, filePath).slice(3)
   if (action !== "update" && action !== "delete") {
@@ -38,7 +40,7 @@ function updateContent(themeId, store, password, action, filePath) {
     return;
   }
 
-  const url = `https://ag784pfw.c5.rs/${store}/${themeId}/${action}`;
+  const url = `http://localhost:3000/store/${store}/theme/${themeID}/${action}`;
 
   let body;
   if (action === "update") {
@@ -55,7 +57,7 @@ function updateContent(themeId, store, password, action, filePath) {
   }
 
   try {
-    const response = fetch(url, {
+    const response = await fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -63,7 +65,7 @@ function updateContent(themeId, store, password, action, filePath) {
       },
       body
     });
-
+    log(response)
     if (response.ok) {
       console.log(`${action} operation successful.`);
     } else {

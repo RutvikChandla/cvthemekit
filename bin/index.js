@@ -9,7 +9,7 @@ const watchCommand = require('./commands/watchCommand');
 const argv = yargs(hideBin(process.argv))
   .command('configure', 'Create a config.yaml', (yargs) => {
     yargs
-      .option('themeid', {
+      .option('themeID', {
         alias: 't',
         describe: 'Theme ID associated with the store',
         demandOption: true,
@@ -30,7 +30,7 @@ const argv = yargs(hideBin(process.argv))
   })
   .command('get', 'get themes', (yargs) => {
     yargs
-      .option('themeid', {
+      .option('themeID', {
         alias: 't',
         describe: 'Theme ID associated with the store',
         type: 'string'

@@ -32,21 +32,40 @@ Now you have CVThemeKit installed and ready to use on your system.
 
 ## Usage
 
-### Theme and Store Configuration
-
-- `-t, --themeID`: Theme ID associated with the store. (Required)
-
-- `-s, --store`: Store URL. Example: `random.mycvshop.com`. (Required)
-
-- `-p, --password`: Your CV Shop API password. (Required)
-
-### Example Usage:
+### Configure
 
 ```bash
-cvthemekit command-name --themeID <Theme ID> --store <Store URL> --password <API Password>
+cvtheme configure --store "random.cv.com" --themeID 1000459 -p random@321
+```
+Creates a `config.yaml` file with the following options:
+
+- `--version`: Show version number [boolean]
+- `--help`: Show help [boolean]
+- `-t, --themeID`: Theme ID associated with the store [string] [required]
+- `-s, --store`: Store URL. Example: `random.mycvshop.com` [string] [required]
+- `-p, --password`: Your CV Shop API password [string] [required]
+
+### Get Themes
+
+```bash
+cvtheme get --list
 ```
 
-Replace `<Theme ID>`, `<Store URL>`, and `<API Password>` with your specific values.
+Get themes
+
+- `--version`: Show version number `[boolean]`
+- `--help`: Show help `[boolean]`
+- `-t, --themeID`: Theme ID associated with the store `[string]`
+- `-s, --store`: Store URL. Example: `random.mycvshop.com` `[string]`
+- `-p, --password`: Your CV Shop API password `[string]`
+- `--list`: List all theme IDs `[boolean]`
+
+### Watch Themes
+
+```bash
+cvtheme watch
+```
+
 
 Enjoy using CVThemeKit! 🚀
 

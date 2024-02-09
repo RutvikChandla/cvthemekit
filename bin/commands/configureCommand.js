@@ -2,14 +2,14 @@
 const { createConfigFile } = require('../utils/utils');
 
 function executeConfigureCommand(argv) {
-  const { themeid, store, password } = argv;
+  const { themeID, store, password } = argv;
 
-  if (!themeid || !store || !password) {
+  if (!themeID || !store || !password) {
     console.error('Missing required arguments for configure command');
     return;
   }
 
-  createConfigFile(themeid, store, password);
+  createConfigFile(themeID, store, password);
 }
 
 module.exports = executeConfigureCommand;

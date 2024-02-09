@@ -34,20 +34,20 @@ function executeWatchCommand(argv) {
 
   watcher.on('change', (filePath) => {
     console.log(`File ${path.relative(currentDir, filePath).slice(3)} has been changed. Uploading content...`);
-    const { themeId, store, password } = getConfigAndArgs(config);
-    updateContent(themeId, store, password, "update", filePath);
+    const { themeID, store, password } = getConfigAndArgs(config);
+    updateContent(themeID, store, password, "update", filePath);
   });
 
   watcher.on('add', (filePath) => {
     console.log(`File ${path.relative(currentDir, filePath).slice(3)} has been added. Uploading content...`);
-    const { themeId, store, password } = getConfigAndArgs(config);
-    updateContent(themeId, store, password, "update", filePath);
+    const { themeID, store, password } = getConfigAndArgs(config);
+    updateContent(themeID, store, password, "update", filePath);
   });
 
   watcher.on('unlink', (filePath) => {
     console.log(`The file: ${path.relative(currentDir, filePath).slice(3)} has been removed....`);
-    const { themeId, store, password } = getConfigAndArgs(config);
-    updateContent(themeId, store, password, "delete", filePath);
+    const { themeID, store, password } = getConfigAndArgs(config);
+    updateContent(themeID, store, password, "delete", filePath);
   });
 
   watcher.on('error', (error) => {
@@ -60,7 +60,7 @@ function executeWatchCommand(argv) {
 function getConfigAndArgs(config) {
   try {
     return {
-      themeId: config.development.theme_id,
+      themeID: config.development.theme_id,
       store: config.development.store,
       password: config.development.password
     };
